@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Expense Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Weekly Expense Tracker</h1>
+    <form id="expenseForm">
+        <label for="week1">Week 1:</label>
+        <input type="number" id="week1" name="week1" min="0" max="5000" step="0.01"><br>
+        <label for="week2">Week 2:</label>
+        <input type="number" id="week2" name="week2" min="0" max="5000" step="0.01"><br>
+        <label for="week3">Week 3:</label>
+        <input type="number" id="week3" name="week3" min="0" max="5000" step="0.01"><br>
+        <label for="week4">Week 4:</label>
+        <input type="number" id="week4" name="week4" min="0" max="5000" step="0.01"><br>
+        <button type="button" onclick="updateChart()">Update Graph</button>
+    </form>
+    <canvas id="expenseChart" width="400" height="200"></canvas>
+
+    <script>
+        function updateChart() {
+            var week1 = parseFloat(document.getElementById("week1").value) || 0;
+            var week2 = parseFloat(document.getElementById("week2").value) || 0;
+            var week3 = parseFloat(document.getElementById("week3").value) || 0;
+            var week4 = parseFloat(document.getElementById("week4").value) || 0;
+
+            myChart.data.datasets[0].data = [week1, week2, week3, week4];
+            myChart.update();
+        }
+
+        var ctx = document.getElementById('expenseChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Weekly Expenses',
+                    data: [0, 0, 0, 0],
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Amount Spent ($)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Week'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

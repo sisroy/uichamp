@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game - Financial Awareness for Teens</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            background-color: #0056b3;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #004080;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .card {
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .card.flipped {
+            background-color: #fff;
+        }
+        .quiz-question h3 {
+            text-align: left;
+        }
+        .quiz-question ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        footer {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* answerrn  */
+        .selected-answer {
+            cursor: pointer;
+        }
+
+        .selected-answer.correct {
+            background-color: lightgreen;
+        }
+
+        .selected-answer.wrong {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Financial Awareness for Teens</h1>
+        <nav>
+              
+            <a href="index.html">Home</a>
+            <a href="budgeting.html">Budgeting</a>
+            <a href="saving.html">Saving</a>
+            <a href="stock.html">Stock</a>
+            <a href="investing.html">Investing</a>
+            <a href="#">Education</a>
+            <a href="game.html">Games/Quizzes</a>
+            <a href="community.html">Community/Forums</a>
+            <a href="resource.html">Resources</a>
+           
+        </nav>
+    </header>
+    <section class="main-content">
+        <h2>Memory Game</h2>
+        <p>Match pairs of cards by clicking on them. Try to match all pairs!</p>
+        <div id="game-container" class="memory-game">
+            <!-- Game cards will be generated here -->
+        </div>
+        <button id="restart-btn">Restart Game</button>
+    </section>
+    <section class="main-content">
+        <h2>Quiz Forum</h2>
+        <div class="quiz-question">
+            <h3>Question 1: What is the capital of France?</h3>
+            <ul>
+                <li class="correct-answer">Paris</li>
+                <li class="wrong-answer">London</li>
+                <li class="wrong-answer">Berlin</li>
+                <li class="wrong-answer">Rome</li>
+            </ul>
+        </div>
+        <div class="quiz-question">
+            <h3>Question 2: Who wrote "Romeo and Juliet"?</h3>
+            <ul>
+                <li class="wrong-answer">William Shakespeare</li>
+                <li class="correct-answer">William Shakespeare</li>
+                <li class="wrong-answer">Jane Austen</li>
+                <li class="wrong-answer">Charles Dickens</li>
+            </ul>
+        </div>
+        <!-- Add more quiz questions here -->
+    
+    <footer>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Congratulations!</h2>
+                <p>You have successfully matched all pairs!</p>
+                <p>Would you like to play again?</p>
+                <button id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+        <p>&copy; 2024 Financial Awareness for Teens</p>
+    </footer>
+    <script>
+        const cardsArray = ['🍎', '🍎', '🍌', '🍌', '🍉', '🍉', '🍊', '🍊', '🍇', '🍇', '🍓', '🍓', '🥝', '🥝', '🍍', '🍍'];
+        let cardsChosen = [];
+        let cardsChosenId = [];
+        let cardsWon = [];
+        let restartBtn = document.getElementById('restart-btn');
+
+        function createBoard() {
+            let gameContainer = document.getElementById('game-container');
+            cardsArray.forEach((card, index) => {
+                let newCard = document.createElement('div');
+                newCard.classList.add('card');
+                newCard.setAttribute('data-id', index);
+                newCard.textContent = card;
+                newCard.addEventListener('click', flipCard);
+                gameContainer.appendChild(newCard);
+            });
+            shuffleCards();
+        }
+
+        function flipCard() {
+            let cardId = this.getAttribute('data-id');
+            if (!cardsChosenId.includes(cardId) && cardsChosenId.length < 2) {
+                this.classList.add('flipped');
+                cardsChosen.push(cardsArray[cardId]);
+                cardsChosenId.push(cardId);
+                if (cardsChosen.length === 2) {
+                    setTimeout(checkForMatch, 500);
+                }
+            }
+        }
+
+        function checkForMatch() {
+            let cards = document.querySelectorAll('.card');
+            const [optionOneId, optionTwoId] = cardsChosenId;
+            if (cardsChosen[0] === cardsChosen[1]) {
+                cards[optionOneId].classList.add('hidden');
+                cards[optionTwoId].classList.add('hidden');
+                cardsWon.push(cardsChosen);
+            } else {
+                cards[optionOneId].classList.remove('flipped');
+                cards[optionTwoId].classList.remove('flipped');
+            }
+            cardsChosen = [];
+            cardsChosenId = [];
+            if (cardsWon.length === cardsArray.length / 2) {
+                alert('Congratulations! You found all the matches!');
+                showmodal();
+            }
+        }
+        function showModal() {
+    var modal = document.getElementById("myModal");
+    var playAgainBtn = document.getElementById("play-again-btn");
+
+    modal.style.display = "block";
+
+    // When the user clicks on <span> (x), close the modal
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks on "Play Again" button, restart the game and close the modal
+    playAgainBtn.onclick = function() {
+        modal.style.display = "none";
+        restartGame();
+    }
+}
+
+        function shuffleCards() {
+            let cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                let randomPos = Math.floor(Math.random() * cardsArray.length);
+                card.style.order = randomPos;
+            });
+        }
+
+        function restartGame() {
+            let gameContainer = document.getElementById('game-container');
+            gameContainer.innerHTML = '';
+            cardsChosen = [];
+            cardsChosenId = [];
+            cardsWon = [];
+            createBoard();
+        }
+
+        restartBtn.addEventListener('click', restartGame);
+
+        createBoard();
+        document.querySelectorAll('.quiz-question ul li').forEach(answer => {
+            answer.addEventListener('click', () => {
+                // Remove selected class from all answers
+                document.querySelectorAll('.quiz-question ul li').forEach(a => {
+                    a.classList.remove('selected-answer', 'correct', 'wrong');
+                });
+                // Add selected class to the clicked answer
+                answer.classList.add('selected-answer');
+                
+                // Check if the selected answer is correct or wrong
+                if (answer.classList.contains('correct-answer')) {
+                    answer.classList.add('correct');
+                } else {
+                    answer.classList.add('wrong');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

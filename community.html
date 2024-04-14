@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Forum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px; /* Add space at the bottom */
+}
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #444;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0 10px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .post {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .post h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        .post p {
+            margin-bottom: 10px;
+        }
+
+        .post .author {
+            font-style: italic;
+            color: #666;
+        }
+
+        .feedback-form {
+            width: 60%; 
+            margin: 20px auto;
+            background-color: #08ea9bf5;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-form label {
+            font-weight: bold;
+        }
+
+        .feedback-form textarea {
+            width: 100%;
+            height: 100px;
+            resize: vertical; 
+        }
+
+        .feedback-form button {
+            background-color: #cb2222;
+            color: #eaf2f3;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .feedback-form button:hover {
+            background-color: #555;
+        }
+
+
+
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 0px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 0;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            .post {
+                padding: 15px;
+            }
+            .post h2 {
+                font-size: 20px;
+            }
+        }
+        .feedback-form {
+    width: 60%; 
+    margin: 20px auto;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Community Forum</h1>
+    </header>
+
+    <nav>
+        
+          
+        <a href="index.html">Home</a>
+        <a href="budgeting.html">Budgeting</a>
+        <a href="saving.html">Saving</a>
+        <a href="stock.html">Stock</a>
+        <a href="investing.html">Investing</a>
+        <a href="#">Education</a>
+        <a href="game.html">Games/Quizzes</a>
+        <a href="community.html">Community/Forums</a>
+        <a href="resource.html">Resources</a>
+       
+
+    </nav>
+
+    <div class="container">
+        <div class="post">
+            <h2>Question about Financial Planning</h2>
+            <p>Hi everyone, I'm new to financial planning and I have a question about budgeting...</p>
+            <p class="author">Posted by JohnDoe</p>
+        </div>
+
+        <div class="post">
+            <h2>Looking for Investment Advice</h2>
+            <p>Hey folks, I'm considering investing in the stock market but not sure where to start...</p>
+            <p class="author">Posted by JaneSmith</p>
+        </div>
+
+        <div class="post">
+            <h2>How to Save Money Effectively?</h2>
+            <p>I'm looking for tips and tricks on how to save money efficiently. Any suggestions?</p>
+            <p class="author">Posted by SavingsGuru</p>
+        </div>
+
+        <div class="post">
+            <h2>Discussion: Credit Cards vs. Debit Cards</h2>
+            <p>Let's discuss the pros and cons of using credit cards versus debit cards for daily expenses...</p>
+            <p class="author">Posted by FinancialWhiz</p>
+        </div>
+
+        <!-- Add more posts here -->
+    </div>
+
+    <!-- Feedback form in a card-like container -->
+    <section>
+        <div class="feedback-form">
+            <h2>Leave Your Feedback</h2>
+            <form action="https://api.web3forms.com/submit" method="post">
+                <input type="hidden" name="access_key" value="f1737702-28fb-47df-a55c-2bec9d1ee02c">
+
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="feedback">Feedback:</label>
+                    <textarea id="feedback" name="feedback" required></textarea>
+                </div>
+                <button type="submit">Submit Feedback</button>
+            </form>
+        </div>
+    </section>
+</section>
+
+
+
+    
+</body>
+</html>
